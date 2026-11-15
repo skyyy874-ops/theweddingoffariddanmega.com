@@ -1,0 +1,769 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wedding of Farid & Mega</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --wine: #632b40;
+    --dark: #321b26;
+    --gold: #c9a66b;
+    --cream: #faf6f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: #49373d;
+    overflow: hidden;
+}
+
+/* SLIDESHOW */
+
+.slideshow {
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    position: relative;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 65px 22px;
+    text-align: center;
+    background: var(--cream);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.06);
+    transition:
+        opacity 1.1s ease,
+        transform 1.4s cubic-bezier(.2,.7,.2,1),
+        visibility 1.1s;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.inner {
+    width: 100%;
+    max-width: 850px;
+    position: relative;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 1s .3s ease, transform 1s .3s ease;
+}
+
+.slide.active .inner {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.script {
+    font-family: 'Great Vibes', cursive;
+    color: var(--gold);
+    font-size: 40px;
+}
+
+.heading {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--wine);
+    font-size: clamp(40px, 7vw, 65px);
+    font-weight: 500;
+    margin: 15px 0;
+}
+
+.subtitle {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 11px;
+    color: var(--gold);
+}
+
+.line {
+    width: 65px;
+    height: 1px;
+    background: var(--gold);
+    margin: 25px auto;
+}
+
+.description {
+    max-width: 600px;
+    margin: 20px auto;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    line-height: 1.8;
+}
+
+/* COVER */
+
+.cover {
+    color: white;
+    background:
+        linear-gradient(rgba(30,15,23,.48),rgba(30,15,23,.75)),
+        url("/static/foto.jpg") center/cover no-repeat;
+}
+
+.cover .heading {
+    font-family: 'Great Vibes', cursive;
+    color: #f2d8a9;
+    font-size: clamp(65px, 12vw, 110px);
+}
+
+.cover p {
+    color: white;
+}
+
+.cover-frame {
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(220,190,140,.6);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.button {
+    padding: 14px 32px;
+    background: var(--wine);
+    color: white;
+    border: 1px solid var(--gold);
+    border-radius: 40px;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.button:hover {
+    background: var(--gold);
+    color: var(--dark);
+    transform: translateY(-4px);
+}
+
+/* FOTO MEMPELAI */
+
+.photo {
+    width: min(320px, 80vw);
+    height: 370px;
+    object-fit: cover;
+    border-radius: 170px 170px 15px 15px;
+    border: 7px solid white;
+    box-shadow: 0 20px 50px #321b2620;
+    margin: 25px auto;
+    display: block;
+    transition: transform 1s;
+}
+
+.slide.active .photo {
+    animation: photoZoom 1.5s ease both;
+}
+
+.person {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    color: var(--wine);
+    margin: 10px 0;
+}
+
+.parents {
+    font-size: 14px;
+    line-height: 2;
+}
+
+/* COUNTDOWN */
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 35px;
+}
+
+.time {
+    background: white;
+    border: 1px solid #eadcc9;
+    padding: 20px 12px;
+    border-radius: 12px;
+    min-width: 80px;
+}
+
+.time strong {
+    display: block;
+    font: 600 35px 'Cormorant Garamond',serif;
+    color: var(--wine);
+}
+
+.time span {
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+/* EVENT */
+
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.event-card {
+    padding: 30px 18px;
+    border: 1px solid #eadcc9;
+    background: white;
+    border-radius: 15px;
+    transition: .5s;
+}
+
+.event-card h3 {
+    font: 600 30px 'Cormorant Garamond',serif;
+    color: var(--wine);
+    margin-bottom: 15px;
+}
+
+.event-card p {
+    font-size: 13px;
+    line-height: 2;
+}
+
+/* QUOTE */
+
+.quote-slide {
+    background: #f0e8df;
+}
+
+/* FOOTER */
+
+.footer {
+    background: var(--dark);
+    color: white;
+}
+
+.footer .heading {
+    color: #e9c994;
+    font-family: 'Great Vibes', cursive;
+}
+
+/* MUSIC */
+
+.music-btn {
+    position: fixed;
+    z-index: 100;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    background: var(--wine);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.music-btn.playing {
+    animation: spin 5s linear infinite;
+}
+
+/* SLIDE CONTROL */
+
+.controls {
+    position: fixed;
+    z-index: 100;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: rgba(50,27,38,.88);
+    border: 1px solid #c9a66b66;
+    border-radius: 40px;
+    backdrop-filter: blur(10px);
+}
+
+.control-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    padding: 3px 7px;
+}
+
+.indicator {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff65;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.dot.active {
+    width: 20px;
+    border-radius: 10px;
+    background: var(--gold);
+}
+
+/* PROGRESS */
+
+.progress-track {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 110;
+    background: #ffffff25;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--gold);
+    transition: width .1s linear;
+}
+
+/* PETALS */
+
+.petal {
+    position: absolute;
+    top: -25px;
+    width: 12px;
+    height: 18px;
+    background: #e8c99d;
+    border-radius: 100% 0 100% 0;
+    opacity: .65;
+    animation: falling linear infinite;
+    pointer-events: none;
+}
+
+@keyframes falling {
+    to { transform: translateY(110vh) rotate(500deg); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes photoZoom {
+    from { transform: scale(.92); opacity: .5; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@media(max-width:600px) {
+    .event-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .photo {
+        height: 280px;
+    }
+
+    .description {
+        font-size: 19px;
+    }
+
+    .slide {
+        padding: 55px 18px 85px;
+    }
+
+    .event-card {
+        padding: 20px;
+    }
+
+    .event-card h3 {
+        font-size: 26px;
+    }
+
+    .time {
+        min-width: 68px;
+        padding: 13px 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="progress-track">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<audio id="music" loop preload="auto">
+    <source src="/static/musik.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()">♫</button>
+
+<div class="slideshow" id="slideshow">
+
+    <!-- SLIDE 1 -->
+    <section class="slide cover active">
+        <div class="cover-frame"></div>
+        <div id="petals"></div>
+
+        <div class="inner">
+            <p class="subtitle">The Wedding Of</p>
+            <h1 class="heading">Farid & Mega</h1>
+            <div class="line"></div>
+            <p style="letter-spacing:4px;font-size:12px">
+                11 — 13 DECEMBER 2026
+            </p>
+            <p style="margin-top:20px;line-height:1.8;font-size:13px">
+                Dengan penuh rasa syukur,<br>
+                kami mengundang Anda di hari bahagia kami.
+            </p>
+
+            <button class="button" onclick="openInvitation()">
+                Buka Undangan ♡
+            </button>
+        </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide">
+        <div class="inner">
+            <p class="script">A Special Day</p>
+            <p class="subtitle">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+            <h2 class="heading">Undangan Pernikahan</h2>
+            <div class="line"></div>
+            <p class="description">
+                Dengan memohon rahmat dan ridho Allah SWT,
+                kami bermaksud menyelenggarakan pernikahan
+                putra-putri kami.
+            </p>
+            <p class="script">Bismillahirrahmanirrahim</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide">
+        <div class="inner">
+            <p class="script">The Bride & Groom</p>
+            <h2 class="heading">Two Souls, One Love</h2>
+
+            <img src="/static/foto.jpg" class="photo"
+                 alt="Foto pasangan"
+                 onerror="this.alt='Foto tidak ditemukan';this.style.border='2px solid #c9a66b'">
+
+            <h3 class="person">Farid Alamsyah</h3>
+            <p class="parents">
+                Putra bungsu dari<br>
+                Bapak Sarimen & Ibu Tumilah
+            </p>
+
+            <p class="script" style="font-size:55px;margin:15px">&</p>
+
+            <h3 class="person">Mega Silvia</h3>
+            <p class="parents">
+                Putri sulung dari<br>
+                Bapak Minarto & Ibu Nurbaniah
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide">
+        <div class="inner">
+            <p class="script">Save The Date</p>
+            <h2 class="heading">Counting Our Days</h2>
+            <p>Menuju hari bahagia kami</p>
+
+            <div class="countdown">
+                <div class="time">
+                    <strong id="days">0</strong>
+                    <span>HARI</span>
+                </div>
+                <div class="time">
+                    <strong id="hours">0</strong>
+                    <span>JAM</span>
+                </div>
+                <div class="time">
+                    <strong id="minutes">0</strong>
+                    <span>MENIT</span>
+                </div>
+                <div class="time">
+                    <strong id="seconds">0</strong>
+                    <span>DETIK</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5 -->
+    <section class="slide">
+        <div class="inner">
+            <p class="script">Wedding Celebration</p>
+            <h2 class="heading">Detail Acara</h2>
+
+            <div class="event-grid">
+                <div class="event-card">
+                    <h3>Akad Nikah</h3>
+                    <div class="line"></div>
+                    <p>Jumat, 11 Desember 2026</p>
+                    <p>08.00 WIB – Selesai</p>
+                    <p>Kediaman Mempelai Wanita</p>
+                </div>
+
+                <div class="event-card">
+                    <h3>Resepsi</h3>
+                    <div class="line"></div>
+                    <p>Sabtu – Minggu</p>
+                    <p>12–13 Desember 2026</p>
+                    <p>13.00 WIB – Selesai</p>
+                    <p>Kediaman Mempelai Wanita</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section class="slide quote-slide">
+        <div class="inner">
+            <p class="script">With Love</p>
+            <h2 class="heading">Our Happiness</h2>
+            <div class="line"></div>
+            <p class="description">
+                Merupakan suatu kehormatan dan kebahagiaan
+                bagi kami apabila Bapak/Ibu/Saudara/i
+                berkenan hadir untuk memberikan doa restu
+                kepada kedua mempelai.
+            </p>
+            <p>Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 7 -->
+    <section class="slide footer">
+        <div class="inner">
+            <p class="script">Forever Starts Here</p>
+            <h2 class="heading">Farid & Mega</h2>
+            <p>11 — 13 Desember 2026</p>
+            <div class="line"></div>
+            <p style="letter-spacing:3px;font-size:10px">
+                MADE WITH LOVE ♡
+            </p>
+        </div>
+    </section>
+
+</div>
+
+<!-- NAVIGASI -->
+<div class="controls">
+    <button class="control-btn" onclick="previousSlide()">❮</button>
+
+    <div class="indicator" id="indicator">
+        <button class="dot active" onclick="goToSlide(0)"></button>
+        <button class="dot" onclick="goToSlide(1)"></button>
+        <button class="dot" onclick="goToSlide(2)"></button>
+        <button class="dot" onclick="goToSlide(3)"></button>
+        <button class="dot" onclick="goToSlide(4)"></button>
+        <button class="dot" onclick="goToSlide(5)"></button>
+        <button class="dot" onclick="goToSlide(6)"></button>
+    </div>
+
+    <button class="control-btn" id="pauseBtn" onclick="toggleSlideshow()">Ⅱ</button>
+    <button class="control-btn" onclick="nextSlide()">❯</button>
+</div>
+
+<script>
+
+/* SLIDESHOW OTOMATIS */
+
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+const progressBar = document.getElementById("progressBar");
+
+let currentSlide = 0;
+let autoPlay = false;
+let slideTimer = null;
+let progressTimer = null;
+
+const slideDuration = 5000;
+
+function showSlide(index) {
+
+    currentSlide = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === currentSlide);
+    });
+
+    dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === currentSlide);
+    });
+
+    progressBar.style.transition = "none";
+    progressBar.style.width = "0%";
+
+    if (autoPlay) {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                progressBar.style.transition = "width 5s linear";
+                progressBar.style.width = "100%";
+            });
+        });
+    }
+}
+
+function nextSlide() {
+    showSlide(currentSlide + 1);
+    if (autoPlay) startTimer();
+}
+
+function previousSlide() {
+    showSlide(currentSlide - 1);
+    if (autoPlay) startTimer();
+}
+
+function goToSlide(index) {
+    showSlide(index);
+    if (autoPlay) startTimer();
+}
+
+function startTimer() {
+    clearInterval(slideTimer);
+    clearInterval(progressTimer);
+
+    if (!autoPlay) return;
+
+    progressBar.style.transition = "none";
+    progressBar.style.width = "0%";
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            progressBar.style.transition = "width 5s linear";
+            progressBar.style.width = "100%";
+        });
+    });
+
+    slideTimer = setTimeout(() => {
+        showSlide(currentSlide + 1);
+        startTimer();
+    }, slideDuration);
+}
+
+function toggleSlideshow() {
+    autoPlay = !autoPlay;
+
+    document.getElementById("pauseBtn").textContent =
+        autoPlay ? "Ⅱ" : "▶";
+
+    if (autoPlay) {
+        startTimer();
+    } else {
+        clearTimeout(slideTimer);
+        progressBar.style.transition = "none";
+    }
+}
+
+/* BUKA UNDANGAN */
+
+function openInvitation() {
+    autoPlay = true;
+    document.getElementById("pauseBtn").textContent = "Ⅱ";
+
+    playMusic();
+    showSlide(1);
+    startTimer();
+}
+
+/* MUSIK */
+
+const music = document.getElementById("music");
+const musicBtn = document.getElementById("musicBtn");
+
+async function playMusic() {
+    try {
+        await music.play();
+        musicBtn.classList.add("playing");
+        musicBtn.textContent = "♫";
+    } catch (error) {
+        console.error("Musik gagal diputar:", error);
+        musicBtn.textContent = "♪";
+    }
+}
+
+function toggleMusic() {
+    if (music.paused) {
+        playMusic();
+    } else {
+        music.pause();
+        musicBtn.classList.remove("playing");
+        musicBtn.textContent = "♪";
+    }
+}
+
+/* COUNTDOWN */
+
+const weddingDate = new Date(2026, 11, 11, 8, 0, 0).getTime();
+
+function updateCountdown() {
+    let distance = weddingDate - Date.now();
+
+    if (distance < 0) distance = 0;
+
+    document.getElementById("days").textContent =
+        Math.floor(distance / 86400000);
+
+    document.getElementById("hours").textContent =
+        Math.floor((distance % 86400000) / 3600000);
+
+    document.getElementById("minutes").textContent =
+        Math.floor((distance % 3600000) / 60000);
+
+    document.getElementById("seconds").textContent =
+        Math.floor((distance % 60000) / 1000);
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* BUNGA JATUH */
+
+const petals = document.getElementById("petals");
+
+for (let i = 0; i < 20; i++) {
+    const petal = document.createElement("span");
+    petal.className = "petal";
+    petal.style.left = Math.random() * 100 + "%";
+    petal.style.animationDuration = (6 + Math.random() * 8) + "s";
+    petal.style.animationDelay = Math.random() * 7 + "s";
+    petals.appendChild(petal);
+}
+
+</script>
+
+</body>
+</html>
